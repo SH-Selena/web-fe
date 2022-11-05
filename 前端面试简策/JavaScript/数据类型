@@ -1,0 +1,73 @@
+
+## 基本类型：
+number、string、boolean、undefined、null（空对象指针）、symbol
+1. 存储：栈
+2. 赋值：两个对象对应不同的地址
+undefined: 声明变量，但未赋值；不存在或未定义；定义了形参但未传递实参；
+null: 设置为空对象；释放对象引用时可将其设置为 null
+
+### 基本类型转换
+valueOf() -> toString() / 重写 Symbol.toPrimitive
+
+## 引用类型：
+Object、Array、Function（函数声明、函数表达式、箭头函数）
+Date、RegExp、Map、Set等
+1. 存储：对象存储在堆中，指针存储在栈中
+2. 赋值：栈中两个变量指向堆内存中同一个对象
+
+### 堆、栈 
+堆中的内存手动申请，手动释放；栈中内存由操作系统自动申请释放
+栈溢出：
+程序向栈中写入的某个变量的字节数超过变量本身申请的字节数，导致栈中与其相邻的变量值被改变。
+1. 局部数组过大：函数内部数组过大，导致栈溢出（局部变量在栈中）解决方法：1.增大栈空间 2.动态分配内存（使用堆）
+2. 递归调用的层数太多
+3. 指针或者数组越界
+
+### typeof
+typeof 1 // 'number'
+typeof '1' // 'string'
+typeof undefined // 'undefined'
+typeof true // 'boolean'
+typeof Symbol() // 'symbol'
+typeof null // 'object'
+typeof [] // 'object'
+typeof {} // 'object'
+typeof console // 'object'
+typeof console.log // 'function'
+typeof 存在弊端，它虽然可以判断基础数据类型（null 除外），但是引用数据类型中，除了function 类型以外，其他的也无法判断。
+### instanceof
+工作原理：检测构造函数的 prototype 属性是否出现在某个实例对象的原型链上，顺着原型链去找，直到找到相同的原型对象，返回true，否则为false
+object instanceof constructor // object为实例对象，constructor为构造函数
+typeof会返回一个变量的基本类型，instanceof返回的是一个布尔值;
+instanceof 可以准确地判断复杂引用数据类型，但是不能正确判断基础数据类型;
+
+通用检测数据类型，可以采用 Object.prototype.toString
+
+### 条件判断
+除了 undefined, null, false, NAN, '', 0, -0 其他值都转为 true，对象转为基本类型
+### 四则运算
+只有加法（可转为字符串），其余都转数字
+### ==
+判断条件：对象toPrimitive，字符串unicode
+
+## 数组常用方法
+push()+数组末尾、unshift()+数组开头、splice(start, 0、插入的元素)、concat()创建副本然后+数组末尾，返回新数组
+pop()-最后一项、shift()-第一项、splice(start, delete_num)、slice(start, end)
+indexOf(value)、includes(value)、find()返回匹配的第一个元素
+reverse()翻转数组、sort()接受一个比较函数
+join('参数')拼接字符串
+some()至少有一项满足、every()每一项都满足、forEach()每一项都运行，无返回值、filter()每一项都执行，为true的组成数组并返回、map()每一项都执行，结果构成新数组
+## 字符串常用方法
+concat()拼接字符串
+slipt()
+toString()
+slice(start, end)、substr()、substring()创建副本并操作
+trim()、trimLeft()、trimRight()删除前后、前、后所有空格
+repeat(nums)复制拼接
+padStart(length, str)、padEnd()复制字符串，在相应一边填充字符，直至满足长度
+toLowerCase()、toUpperCase()大小写转换
+chatAt(index)、indexOf()、lastIndexOf()、startWith(str)、includes(str)
+charAt()、charCodeAt()、fromCharCode()、
+split()拆分字符串，合并为数组
+match(RegExp)返回数组、search(RegExp)返回索引、replace(origin, new)替换
+valueOf()

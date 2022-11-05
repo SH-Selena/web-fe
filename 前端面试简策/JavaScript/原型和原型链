@@ -1,0 +1,15 @@
+prototype 首先，每个函数都有 prototype 属性，除了 Function.prototype.bind()，其指向原型
+每个对象都有 __proto__ 属性，指向创建该对象的构造函数的原型，其实这个属性指向了 [prototype]，但是其是内部属性，访问不到，所以使用 __proto__ 
+__proto__ 将对象连接起来组成了原型链
+
+## 原型
+
+## 原型链
+
+## 继承 extends
+
+## js 的类
+
+## 实例
+new 生成一个对象；链接到原型；绑定 this；返回新对象
+## 作用域链

@@ -1,0 +1,113 @@
+## var、let、const
+var声明的变量既是全局变量，也是顶层变量（windows、global）；存在变量提升；不存在暂时性死区；可多次声明；函数内为局部
+let块级作用域；不存在变量提升；不允许相同作用域重复声明
+const声明只读变量，一旦声明不可更改（变量指向的内存地址所保存的数据不可改动），等同于常量；不存在变量提升
+
+## 数组：
+...扩展运算符（数组->参数序列、数据结构->数组、数组复制合并，浅拷贝、解构赋值）
+构造函数Array.from()，对象转为数组、接受第二个参数对每个元素进行处理并更新数组值
+构造函数Array.of(1，2，3)将值转为数组
+
+### 实例对象新增的方法：
+copyWithin(start, end)将指定位置end的成员复制到其他位置start（覆盖）
+find(value, index, arr)找出第一个符合条件的数组成员
+findIndex(value, index, arr)返回第一个符合条件的数组成员的位置
+fill(value, start, end)使用给定值，填充一个数组，指定填充的起始位置和结束位置
+entries()键值对的遍历
+keys()键名的遍历
+values()键值的遍历
+includes(value, start)判断数组是否包含给定的值,第二个参数表示搜索的起始位置，默认为0,参数为负数则表示倒数的位置
+flat(想要拉平的层数)默认只会“拉平”一层
+flatMap()对原数组的每个成员执行一个函数相当于执行Array.prototype.map()，然后对返回值组成的数组执行flat()方法。该方法返回一个新数组，不改变原数组
+
+## 对象：
+属性简写
+this关键字总是指向函数所在的当前对象；super关键字指向当前对象的原型对象
+属性遍历
+首先遍历所有数值键，按照数值升序排列
+其次遍历所有字符串键，按照加入时间升序排列
+最后遍历所有 Symbol 键，按照加入时间升序排列
+### 对象新增的方法
+Object.is(a, b)严格判断两个值是否相等，+0 !== -0 / NaN === NaN
+Object.assign(target, source, ...)对象的合并，浅拷贝，遇到同名属性会进行替换
+Object.getOwnPropertyDescriptors(obj)返回指定对象所有自身属性（非继承属性）的描述对象
+Object.setPrototypeOf(object, prototype)设置一个对象的原型对象
+Object.getPrototypeOf(obj)读取一个对象的原型对象
+Object.keys(obj)返回自身的（不含继承的）所有可遍历（enumerable）属性的键名的数组
+Object.values(obj)... 值 ...
+Object.entries(obj)... 键值对 ...
+Object.fromEntries()用于将一个键值对数组转为对象
+
+## 函数
+函数的length属性，返回没有指定默认值的参数个数（设置默认值的参数不为第一个）
+name返回函数的函数名，Function构造函数返回的函数实例为anonymous，bind返回的函数会加上bound前缀
+只要函数参数使用了默认值(b = a)、解构赋值({a, b})、或者扩展运算符(...a)，那么函数内部就不能显式设定为严格模式'use strict'，否则会报错
+### => 箭头函数
+函数体内的this对象，就是定义时所在的对象，而不是使用时所在的对象
+不可以当作构造函数，也就是说不可以使用new命令，否则会抛出一个错误
+不可以使用arguments对象，该对象在函数体内不存在。如果要用可以用 rest 参数代替
+不可以使用yield命令，因此箭头函数不能用作 Generator 函数
+
+## Set、Map
+Set[值, 值]:是由一堆无序的、相关联的，且不重复的内存结构，ES6新增
+add(v)、delete(v)、has(v)、clear()清楚所有成员
+遍历：keys()、values()、entries()返回的都是遍历器对象；forEach()对每个成员操作，没有返回值
+去重：[...new Set(arr)], 
+合并：new Set([...a, ...b])
+交集：new Set([...a].filter(x => b.has(x)))
+a对b的差集：new Set([...a].filter(x => !b.has(x)))
+
+Map[键, 值]:每个元素有一个称作key 的域，不同元素的key 各不相同
+size, set(k, v), get(k), has(k), delete(k), clear()
+keys(), values(), entries(), forEach(value, key, map)
+
+### WeakSet, WeakMap
+
+## Promise
+Promise对象是一个构造函数，用来生成Promise实例。链式操作减低了编码难度，代码可读性明显增强，避免回调地狱
+new Promise(function(resolve, reject) {});
+// resolve 函数的作用是，将Promise对象的状态从“未完成”变为“成功”
+// reject 函数的作用是，将Promise对象的状态从“未完成”变为“失败”
+### 状态
+pending（进行中）--> fulfilled（已成功）
+pending（进行中）--> rejected（已失败）
+### 实例方法
+then(resolve, reject)实例状态发生改变时的回调函数，返回的是一个新的Promise实例
+catch() === .then(null, rejection) / .then(undefined, rejection)，用于指定发生错误时的回调函数，Promise对象抛出的错误不会传递到外层代码
+finally()不管 Promise 对象最后状态如何，都会执行的操作
+### 构造函数方法
+Promise.all([p1, p2, p3])将多个 Promise实例，包装成一个新的 Promise实例
+全成功->成功；
+一个失败->失败（第一个被reject的实例的返回值传给p的回调函数，若自己定义了catch方法，那么它一旦被rejected，并不会触发Promise.all()的catch方法）
+
+Promise.race([p1, p2, p3])方法同样是将多个 Promise 实例，包装成一个新的 Promise 实例
+只要有一个实例率先改变状态，p的状态就跟着改变,率先改变的 Promise 实例的返回值则传递给p的回调函数
+
+Promise.allSettled()方法接受一组 Promise 实例作为参数，包装成一个新的 Promise 实例
+只有等到所有这些参数实例都返回结果，不管是fulfilled还是rejected，包装实例才会结束
+
+Promise.resolve()
+参数是一个 Promise 实例，promise.resolve将不做任何修改、原封不动地返回这个实例
+参数是一个 thenable 对象，promise.resolve会将这个对象转为 Promise对象，然后就立即执行thenable对象的then()方法
+参数不是具有then()方法的对象，或根本就不是对象，Promise.resolve()会返回一个新的 Promise 对象，状态为resolved
+没有参数时，直接返回一个resolved状态的 Promise 对象
+
+Promise.reject(reason)方法也会返回一个新的 Promise 实例，该实例的状态为rejected
+参数，会原封不动地变成后续方法的参数
+
+
+## Generator
+Generator 函数会返回一个遍历器对象，可以依次遍历 Generator 函数内部的每一个状态
+function* helloWorldGenerator() { // function关键字与函数名之间有一个星号
+  yield 'hello'; // 函数体内部使用yield表达式，定义不同的内部状态
+  yield 'world';
+  return 'ending';
+}
+
+https://vue3js.cn/interview/es6/generator.html
+## Proxy
+https://vue3js.cn/interview/es6/proxy.html
+## Module
+https://vue3js.cn/interview/es6/module.html
+## Decorator
+https://vue3js.cn/interview/es6/decorator.html

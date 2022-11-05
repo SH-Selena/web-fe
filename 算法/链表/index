@@ -1,0 +1,12 @@
+## 特点
+随机访问
+查询：O(n)、插入：O(1)
+## 结构
+### 单链表
+Head -> [data, next] -> [data, next] -> null
+### 双链表
+null <- Head <-> [pre, data, next] <-> [pre, data, next] -> null
+### 循环链表
+Head -> [data, next] -> [data, next] -> Head
+### 双向循环链表
+

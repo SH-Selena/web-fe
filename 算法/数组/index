@@ -1,0 +1,9 @@
+## 特点
+顺序访问+随机访问
+查询：O(1)、插入：O(n)
+## 二分法
+[left, right] / [left, right) 适用有序的状态 O(logn)
+## 双指针法
+fastIndex, slowIndex
+## 滑动窗口
+一个 for 循环，循环的索引代表滑动窗口的终止位置
